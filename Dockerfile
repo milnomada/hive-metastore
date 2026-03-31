@@ -1,4 +1,4 @@
-FROM openjdk:16-slim
+FROM openjdk:16.0.2-slim
 
 # Lifted from: https://github.com/joshuarobinson/presto-on-k8s/blob/1c91f0b97c3b7b58bdcdec5ad6697b42e50d74c7/hive_metastore/Dockerfile
 
@@ -16,6 +16,7 @@ ENV DATABASE_DRIVER=org.postgresql.Driver
 ENV DATABASE_TYPE=postgres
 ENV DATABASE_TYPE_JDBC=postgresql
 ENV DATABASE_PORT=5432
+ENV HADOOP_HEAPSIZE=8192
 
 WORKDIR /app
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -50,6 +51,8 @@ RUN \
     apt-get purge -y --auto-remove $build_deps && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+RUN apt update && apt install -y netcat-openbsd
 
 COPY run.sh run.sh
 

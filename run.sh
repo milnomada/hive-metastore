@@ -109,6 +109,20 @@ XML
 }
 
 run_migrations(){
+  # Add wait for database before attempt to du schematool
+  echo "Waiting for database on ${DATABASE_HOST} to launch on ${DATABASE_PORT} ..."
+  t=0
+  max=120
+  while ! nc -z ${DATABASE_HOST} ${DATABASE_PORT} && [ $t -lt $max ]; do
+    sleep 1
+    t=$((t+1))
+  done
+
+  if ! nc -z ${DATABASE_HOST} ${DATABASE_PORT}; then
+    echo "No Database found on ${DATABASE_HOST}:${DATABASE_PORT} after ${max} seconds."
+    return 1
+  fi
+
   if /opt/hive-metastore/bin/schematool -dbType "$DATABASE_TYPE" -validate | grep 'Done with metastore validation' | grep '[SUCCESS]'; then
     echo 'Database OK'
     return 0
