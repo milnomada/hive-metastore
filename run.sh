@@ -78,7 +78,7 @@ generate_s3_custom_endpoint(){
 </property>
 <property>
   <name>fs.s3a.connection.ssl.enabled</name>
-  <value>false</value>
+  <value>${AWS_SSL_ENABLED:-false}</value>
 </property>
 <property>
   <name>fs.s3a.path.style.access</name>
