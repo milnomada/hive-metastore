@@ -17,12 +17,12 @@ $ docker pull naushadh/hive-metastore
 If you wish, you can also build the image yourself by cloning the repository, and executing the docker build command.
 
 ```bash
-$ git clone https://github.com/naushadh/hive-metastore
+$ git clone https://github.com/milnomada/hive-metastore
 $ cd hive-metastore
 $ make build
 ```
 
-You can also use DockerCompose to launch the app with all of its dependencies using [docker-compose.yml](https://raw.githubusercontent.com/naushadh/hive-metastore/main/docker-compose.yml) file in the GitHub repository. Just replace the `build` with `image`
+You can also use DockerCompose to launch the app with all of its dependencies using [docker-compose.yml](https://raw.githubusercontent.com/milnomada/hive-metastore/main/docker-compose.yml) file in the GitHub repository. Just replace the `build` with `image`
 
 ```diff
 app:
@@ -52,19 +52,22 @@ You can now connect to the MetaStore Thrift server at `0.0.0.0:9083` from your h
 
 Controlled via ENVironment variables
 
-Key                | Required?                             | Description
--------------------|---------------------------------------|-------------
-DATABASE_TYPE_JDBC | No, defaults to postgresql            | Database type<sup>1</sup> for JDBC connection
-DATABASE_TYPE      | No, defaults to postgres              | Database type<sup>1</sup> for migration tool
-DATABASE_DRIVER    | No, defaults to org.postgresql.Driver | Database class used for JDBC connection
-DATABASE_HOST      | Yes                                   | Database host
-DATABASE_PORT      | No, defaults to 5432                  | Database port
-DATABASE_DB        | Yes                                   | Database name
-DATABASE_USER      | Yes                                   | Database user
-DATABASE_PASSWORD  | Yes                                   | Database password
-S3_ENDPOINT_URL    | No                                    | Custom S3 endpoint URL; useful for LocalStack integration
-S3_BUCKET          | Yes                                   | S3 bucket name
-S3_PREFIX          | Yes                                   | S3 bucket prefix
+Key                   | Required?                             | Description
+----------------------|---------------------------------------|-------------
+DATABASE_TYPE_JDBC    | No, defaults to postgresql            | Database type<sup>1</sup> for JDBC connection
+DATABASE_TYPE         | No, defaults to postgres              | Database type<sup>1</sup> for migration tool
+DATABASE_DRIVER       | No, defaults to org.postgresql.Driver | Database class used for JDBC connection
+DATABASE_HOST         | Yes                                   | Database host
+DATABASE_PORT         | No, defaults to 5432                  | Database port
+DATABASE_DB           | Yes                                   | Database name
+DATABASE_USER         | Yes                                   | Database user
+DATABASE_PASSWORD     | Yes                                   | Database password
+S3_ENDPOINT_URL       | No                                    | Custom S3 endpoint URL; useful for LocalStack integration
+S3_BUCKET             | Yes                                   | S3 bucket name
+S3_PREFIX             | Yes                                   | S3 bucket prefix
+AWS_ACCESS_KEY_ID     | Yes                                   | S3 key id
+AWS_SECRET_ACCESS_KEY | Yes                                   | S3 key secret
+AWS_SSL_ENABLED       | No                                    | S3 connection ssl enabled 
 
 > **<sup>1</sup>** Though you have the ability to modify `DATABASE_TYPE_JDBC`/`DATABASE_TYPE`, we presently only install Postgres driver.
 > You'd have to extend this image and install a non-Postgres driver to change the Database type.
